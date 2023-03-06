@@ -1,17 +1,32 @@
 import React, { useState } from 'react';
+import { turnIsRecorded, calculateWinner } from './utils/turn';
+import { winningStates } from './utils/consts';
 import './style.css';
 
 export const App = () => {
   const [xState, setXState] = useState([]);
   const [oState, setOState] = useState([]);
   const [xTurn, setXTurn] = useState(true);
-  // const [number, setNumber] = useState();
+  const [winnerText, setWinnerText] = useState('');
 
-  const handleClick = (index) => {
+  if ((xState.length || oState.length) && winnerText === '') {
+    const winner = calculateWinner({ xState, oState, winningStates });
+
+    if (winner) {
+      setWinnerText(winner === 'x' ? 'X wins!' : 'O wins!');
+    }
+  }
+
+  // calculate game over
+
+  const turn = (id) => {
+    if (!id && id !== 0) return;
+    if (turnIsRecorded([...xState, ...oState], id)) return;
+
     if (xTurn) {
-      setXState([...xState, index]);
+      setXState([...xState, id]);
     } else {
-      setOState([...oState, index]);
+      setOState([...oState, id]);
     }
 
     setXTurn(!xTurn);
@@ -26,14 +41,17 @@ export const App = () => {
   };
 
   return (
-    <div className="grid">
-      {Array.from(Array(9)).map((_, index) => (
-        <div
-          className={`cell ${compare(index)}`}
-          key={index}
-          onClick={() => handleClick(index)}
-        ></div>
-      ))}
+    <div>
+      {winnerText}
+      <div className="grid">
+        {Array.from(Array(9)).map((_, index) => (
+          <div
+            className={`cell ${compare(index)}`}
+            key={index}
+            onClick={() => turn(index)}
+          ></div>
+        ))}
+      </div>
     </div>
   );
 };
