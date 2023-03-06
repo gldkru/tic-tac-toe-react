@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { turnIsRecorded, calculateWinner } from './utils/turn';
+import {
+  turnIsRecorded,
+  calculateWinner,
+  calculateGameOver,
+} from './utils/turn';
 import { winningStates } from './utils/consts';
 import './style.css';
 
@@ -14,10 +18,10 @@ export const App = () => {
 
     if (winner) {
       setWinnerText(winner === 'x' ? 'X wins!' : 'O wins!');
+    } else if (calculateGameOver([...xState, ...oState])) {
+      setWinnerText('Game over!');
     }
   }
-
-  // calculate game over
 
   const turn = (id) => {
     if (!id && id !== 0) return;
