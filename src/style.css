@@ -22,7 +22,6 @@ body {
   grid-template-rows: repeat(3, minmax(0, 1fr));
   width: 300px;
   height: 300px;
-  position: relative;
 }
 
 .cell {
@@ -83,4 +82,10 @@ body {
 .result > p {
   display: block;
   margin: 0 0 15px;
+}
+
+.grid-parent {
+  width: 300px;
+  height: 300px;
+  position: relative;
 }

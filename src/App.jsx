@@ -44,9 +44,21 @@ export const App = () => {
     }
   };
 
+  const restartGame = () => {
+    setXState([]);
+    setOState([]);
+    setXTurn(true);
+    setWinnerText('');
+  };
+
   return (
-    <div>
-      {winnerText}
+    <div class="grid-parent">
+      {winnerText ? (
+        <div class="result">
+          <p>{winnerText}</p>
+          <button onClick={restartGame}>Restart game</button>
+        </div>
+      ) : null}
       <div className="grid">
         {Array.from(Array(9)).map((_, index) => (
           <div
