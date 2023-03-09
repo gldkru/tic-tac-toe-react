@@ -5,6 +5,7 @@ import {
   calculateGameOver,
 } from './utils/turn';
 import { winningStates } from './utils/consts';
+
 import './style.css';
 
 export const App = () => {
