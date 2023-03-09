@@ -16,6 +16,8 @@ export const Game = () => {
   const [xTurn, setXTurn] = useState(true);
   const [winnerText, setWinnerText] = useState('');
 
+  console.log(xTurn);
+
   if ((xState.length || oState.length) && winnerText === '') {
     const winner = calculateWinner({ xState, oState, winningStates });
 
@@ -40,6 +42,8 @@ export const Game = () => {
   };
 
   const compare = (index) => {
+    // console.log(index);
+
     if (xState.includes(index)) {
       return 'x';
     } else if (oState.includes(index)) {

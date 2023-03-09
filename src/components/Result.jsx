@@ -1,5 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 export const Result = ({ children }) => {
-  return <div class="result">{children}</div>;
+  return <div className="result">{children}</div>;
 };

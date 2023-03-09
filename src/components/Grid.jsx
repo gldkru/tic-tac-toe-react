@@ -9,6 +9,7 @@ export const Grid = ({ onCellClick, compare }) => {
           key={index}
           className={compare(index)}
           onClick={() => onCellClick(index)}
+          index={index}
         />
       ))}
     </div>
