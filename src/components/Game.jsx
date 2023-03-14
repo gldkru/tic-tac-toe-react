@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   turnIsRecorded,
   calculateWinner,
@@ -14,21 +14,18 @@ export const Game = () => {
   const [xState, setXState] = useState([]);
   const [oState, setOState] = useState([]);
   const [xTurn, setXTurn] = useState(true);
-  const [winnerText, setWinnerText] = useState('');
 
   const [showRules, setShowRules] = useState(false);
 
-  console.log(xTurn);
-
-  if ((xState.length || oState.length) && winnerText === '') {
+  const winnerText = useMemo(() => {
     const winner = calculateWinner({ xState, oState, winningStates });
 
     if (winner) {
-      setWinnerText(winner === 'x' ? 'X wins!' : 'O wins!');
+      return winner === 'x' ? 'X wins!' : 'O wins!';
     } else if (calculateGameOver([...xState, ...oState])) {
-      setWinnerText('Game over!');
+      return 'Game over!';
     }
-  }
+  }, [xState, oState]);
 
   const turn = (id) => {
     if (!id && id !== 0) return;
@@ -57,7 +54,6 @@ export const Game = () => {
     setXState([]);
     setOState([]);
     setXTurn(true);
-    setWinnerText('');
   };
 
   return (

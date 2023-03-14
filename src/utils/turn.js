@@ -17,6 +17,8 @@ export const calculateWinner = ({ xState, oState, winningStates }) => {
     }
   });
 
+  console.log('winner!');
+
   return winner;
 };
 
