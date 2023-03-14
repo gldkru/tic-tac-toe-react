@@ -17,16 +17,6 @@ export const Game = () => {
 
   const [showRules, setShowRules] = useState(false);
 
-  const winnerText = useMemo(() => {
-    const winner = calculateWinner({ xState, oState, winningStates });
-
-    if (winner) {
-      return winner === 'x' ? 'X wins!' : 'O wins!';
-    } else if (calculateGameOver([...xState, ...oState])) {
-      return 'Game over!';
-    }
-  }, [xState, oState]);
-
   const turn = (id) => {
     if (!id && id !== 0) return;
     if (turnIsRecorded([...xState, ...oState], id)) return;
@@ -56,6 +46,30 @@ export const Game = () => {
     setXTurn(true);
   };
 
+  const result = useMemo(() => {
+    const gameOver = calculateGameOver([...xState, ...oState]);
+    let winner = false;
+
+    if (!gameOver) {
+      winner = calculateWinner({ xState, oState, winningStates });
+
+      if (!winner) {
+        return null;
+      }
+    }
+
+    return (
+      <Result>
+        <p>
+          {gameOver ? 'Game over!' : winner === 'x' ? 'X wins!' : 'O wins!'}
+        </p>
+        <Button onClick={restartGame} alt="Restart game">
+          Restart game
+        </Button>
+      </Result>
+    );
+  }, [xState, oState]);
+
   return (
     <>
       <h2>❌⭕ Tic-Tac-Toe</h2>
@@ -63,14 +77,7 @@ export const Game = () => {
       {showRules && <p>Тут были правила, но мы их ...</p>}
       <br />
       <div className="grid-parent">
-        {winnerText ? (
-          <Result>
-            <p>{winnerText}</p>
-            <Button onClick={restartGame} alt="Restart game">
-              Restart game
-            </Button>
-          </Result>
-        ) : null}
+        {result}
         <Grid onCellClick={turn} compare={compare} />
       </div>
     </>
