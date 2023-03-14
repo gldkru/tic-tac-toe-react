@@ -16,6 +16,8 @@ export const Game = () => {
   const [xTurn, setXTurn] = useState(true);
   const [winnerText, setWinnerText] = useState('');
 
+  const [showRules, setShowRules] = useState(false);
+
   console.log(xTurn);
 
   if ((xState.length || oState.length) && winnerText === '') {
@@ -61,6 +63,9 @@ export const Game = () => {
   return (
     <>
       <h2>❌⭕ Tic-Tac-Toe</h2>
+      <button onClick={() => setShowRules(!showRules)}>Показать правила</button>
+      {showRules && <p>Тут были правила, но мы их ...</p>}
+      <br />
       <div className="grid-parent">
         {winnerText ? (
           <Result>
